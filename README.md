@@ -28,6 +28,8 @@
 
 ## 📋 Overview
 
+> **Note:** This project is a modified fork of the original [ecommerce-microservices](https://github.com/hoangtien2k3/ecommerce-microservices) created by [Hoàng Anh Tiến](https://github.com/hoangtien2k3).
+
 **ecommerce-microservices** is a production-grade, cloud-native e-commerce platform built with a microservice architecture. It consists of **13 Spring Boot 3** backend services, an **Apache APISIX** API Gateway, a **Next.js 16** frontend, and a full suite of infrastructure — all deployable on **Kubernetes (k3d/K3s)**.
 
 This forked version introduces a robust **Monorepo structure**, advanced **Infrastructure as Code (Terraform)**, and extensive **Automated Testing & Chaos Engineering** using Istio and K6.
