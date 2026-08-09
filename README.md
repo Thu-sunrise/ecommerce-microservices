@@ -28,19 +28,20 @@
 
 ## 📋 Overview
 
-**ecommerce-microservices** is a production-grade, cloud-native e-commerce platform built with a microservice
-architecture. It consists of **13 Spring Boot 3** backend services, an **Apache APISIX** API Gateway, a **Next.js 16**
-frontend, and a full suite of infrastructure — all deployable on **Kubernetes (k3d)** with a single command.
+**ecommerce-microservices** is a production-grade, cloud-native e-commerce platform built with a microservice architecture. It consists of **13 Spring Boot 3** backend services, an **Apache APISIX** API Gateway, a **Next.js 16** frontend, and a full suite of infrastructure — all deployable on **Kubernetes (k3d/K3s)**.
+
+This forked version introduces a robust **Monorepo structure**, advanced **Infrastructure as Code (Terraform)**, and extensive **Automated Testing & Chaos Engineering** using Istio and K6.
 
 |                   |                                                    |
 |-------------------|----------------------------------------------------|
 | ⚡ **Backend**     | 13 microservices · Java 21 · Spring Boot 3.3.5     |
-| 🚪 **Gateway**    | Apache APISIX 3.9 · Rate limiting · JWT validation |
+| 🚪 **Gateway**    | Apache APISIX 3.9 · Istio Service Mesh             |
 | 🗄️ **Databases** | PostgreSQL 16 · Redis 7 · Elasticsearch 8          |
 | 📨 **Messaging**  | Apache Kafka 3.9 (KRaft mode, no Zookeeper)        |
 | 🔐 **Auth**       | Keycloak 26 · OAuth2 / OIDC · JWT                  |
 | ☁️ **Storage**    | RustFS (S3-compatible)                             |
-| 🐳 **Deploy**     | Docker Compose · k3d / Kubernetes · ArgoCD         |
+| 🐳 **Deploy**     | Terraform · k3d / Kubernetes · ArgoCD              |
+| 🧪 **Testing**    | Chaos Engineering (Istio) · K6 Load Testing        |
 
 ---
 
@@ -72,14 +73,14 @@ frontend, and a full suite of infrastructure — all deployable on **Kubernetes 
 | **Styling**   | Tailwind CSS 4, Lucide icons |
 | **HTTP**      | Axios                        |
 
-### Infrastructure
+### Infrastructure & QA (New Additions)
 
 |                |                                               |
 |----------------|-----------------------------------------------|
 | **Local K8s**  | k3d (K3s in Docker), NGINX Ingress Controller |
-| **Production** | Kubernetes, ArgoCD (GitOps)                   |
-| **Registry**   | GitHub Container Registry (ghcr.io)           |
-| **CI**         | GitHub Actions, SonarCloud                    |
+| **IaC**        | Terraform (AWS Provider configuration)        |
+| **Mesh/Proxy** | Istio 1.23.0, HA-Proxy                        |
+| **Chaos/QA**   | Istio Fault Injection, K6 (HPA testing)       |
 
 ---
 
@@ -103,7 +104,7 @@ The script automatically:
 1. Installs k3d and kubectl (if missing)
 2. Creates a local Kubernetes cluster
 3. Deploys NGINX Ingress Controller
-4. Applies secrets, config maps, and infrastructure (PostgreSQL, Redis, Kafka, Elasticsearch, RustFS, Keycloak)
+4. Applies secrets, config maps, and infrastructure (PostgreSQL, Redis, Kafka, Elasticsearch, Keycloak)
 5. Deploys APISIX gateway + all 13 backend services + frontend
 6. Updates `/etc/hosts`
 
@@ -120,11 +121,10 @@ kubectl get pods -n ecommerce -w
 | 🏠 **Frontend**       | [http://ecommerce.local](http://ecommerce.local)                                              |
 | 🚪 **API Gateway**    | [http://api.ecommerce.local](http://api.ecommerce.local)                                      |
 | 🔐 **Keycloak Admin** | [http://keycloak.ecommerce.local](http://keycloak.ecommerce.local/admin/master/console)       |
-| 📦 **RustFS Console** | [http://rustfs.ecommerce.local/rustfs/console](http://rustfs.ecommerce.local/rustfs/console/) |
 
 ---
 
-## 📁 Project Structure
+## 📁 Project Structure (Monorepo)
 
 ```
 ecommerce-microservices/
@@ -136,24 +136,37 @@ ecommerce-microservices/
 │   └── ... (13 services total)
 ├── infrastructure/                 # Deployment & Infrastructure configs
 │   ├── k8s/                        #   Kubernetes manifests (ArgoCD, gateway, ingress)
-│   ├── terraform/                  #   Terraform modules
-│   └── docker/                     #   Docker configs (Postgres, Keycloak, etc.)
-├── packages/                       # Shared libraries (Monorepo)
+│   ├── terraform/                  #   Terraform IaC modules
+│   ├── docker/                     #   Docker configs (Postgres, Keycloak, etc.)
+│   └── istio-1.23.0/               #   Istio Service Mesh configurations
+├── packages/                       # Shared libraries
 │   └── common-lib/                 #   Core, security, logging, kafka, storage modules
 ├── scripts/                        # Automation & deployment scripts
 │   ├── start-ecommerce.sh          #   Entry point for local cluster
 │   ├── k3d-setup.sh                #   One-shot K8s deployment script
 │   └── deploy-k3s-cluster.sh       #   Production K3s deployment script
-├── tests/                          # Automated testing scenarios
+├── tests/                          # Automated testing & Chaos Engineering
 │   ├── ha-proxy/                   #   HA Proxy & Load balancing tests
-│   ├── hpa/                        #   Horizontal Pod Autoscaling tests
-│   ├── istio-chaos/                #   Istio chaos engineering
-│   ├── istio-routing/              #   Istio traffic routing tests
+│   ├── hpa/                        #   Horizontal Pod Autoscaling tests with k6
+│   ├── istio-chaos/                #   Istio chaos engineering (Fault Injection)
+│   ├── istio-routing/              #   Istio traffic routing & split tests
 │   └── security/                   #   mTLS & security tests
 ├── docker-compose.yml              # Full-stack local orchestration
 ├── Makefile                        # Build & deploy automation
 └── pom.xml                         # Parent POM
 ```
+
+---
+
+## 🧪 Automated Testing & Chaos Engineering
+
+This repository includes a comprehensive suite of tests to ensure system resilience, scalability, and security. Navigate to the `tests/` directory to explore:
+
+1. **Chaos Engineering (`istio-chaos`)**: Uses Istio's fault injection to simulate network delays and HTTP 500 Abort errors. Ensures frontend and backend gracefully handle degraded service.
+2. **Horizontal Pod Autoscaling (`hpa`)**: Utilizes `k6` to generate massive concurrent traffic, triggering Kubernetes HPA to scale pods up and down automatically based on CPU/Memory metrics.
+3. **Traffic Routing (`istio-routing`)**: Validates Istio's ability to perform A/B testing, Canary deployments, and premium user traffic shaping.
+4. **High Availability (`ha-proxy`)**: Tests load balancing and failover mechanisms across multiple pod replicas.
+5. **Security (`security`)**: Verifies Istio strict mTLS (Mutual TLS) enforcing encrypted communication between microservices.
 
 ---
 
@@ -181,7 +194,7 @@ Every service exposes:
 ## 👥 Contributors & Modifications
 
 - **Original Author:** [Hoàng Anh Tiến](https://github.com/hoangtien2k3)
-- **Modified by:** [Thu-sunrise](https://github.com/Thu-sunrise) - Refactored project structure, added infrastructure configurations (Terraform, Istio), chaos engineering, and extensive test scripts.
+- **Modified by:** [Thu-sunrise](https://github.com/Thu-sunrise) - Refactored project structure into a Monorepo, added infrastructure configurations (Terraform, Istio), chaos engineering, and extensive test scripts.
 
 ## Contributing
 
