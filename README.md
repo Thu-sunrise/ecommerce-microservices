@@ -1,8 +1,8 @@
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: light)" srcset="https://socialify.git.ci/Thu-sunrise/ecommerce-microservices/image?description=1&descriptionEditable=%E2%9A%A1%EF%B8%8F%2013%20Microservices%20%E2%80%A2%20Spring%20Boot%203%20%E2%80%A2%20Kubernetes&font=Inter&forks=1&language=1&logo=https%3A%2F%2Fi.ibb.co%2FN366vtQ%2Fhoangtien2k3.png&owner=1&pattern=Floating%20Cogs&pulls=1&stargazers=1&theme=Light"/>
-    <source media="(prefers-color-scheme: dark)" srcset="https://socialify.git.ci/Thu-sunrise/ecommerce-microservices/image?description=1&descriptionEditable=%E2%9A%A1%EF%B8%8F%2013%20Microservices%20%E2%80%A2%20Spring%20Boot%203%20%E2%80%A2%20Kubernetes&font=Inter&forks=1&language=1&logo=https%3A%2F%2Fi.ibb.co%2FN366vtQ%2Fhoangtien2k3.png&owner=1&pattern=Floating%20Cogs&pulls=1&stargazers=1&theme=Dark"/>
-    <img alt="ecommerce-microservices" src="https://socialify.git.ci/Thu-sunrise/ecommerce-microservices/image?description=1&descriptionEditable=%E2%9A%A1%EF%B8%8F%2013%20Microservices%20%E2%80%A2%20Spring%20Boot%203%20%E2%80%A2%20Kubernetes&font=Inter&forks=1&language=1&logo=https%3A%2F%2Fi.ibb.co%2FN366vtQ%2Fhoangtien2k3.png&owner=1&pattern=Floating%20Cogs&pulls=1&stargazers=1&theme=Auto"/>
+    <source media="(prefers-color-scheme: light)" srcset="https://socialify.git.ci/Thu-sunrise/ecommerce-microservices/image?description=1&descriptionEditable=%E2%9A%A1%EF%B8%8F%2013%20Microservices%20%E2%80%A2%20Spring%20Boot%203%20%E2%80%A2%20Kubernetes&font=Inter&forks=1&language=1&owner=1&pattern=Floating%20Cogs&pulls=1&stargazers=1&theme=Light"/>
+    <source media="(prefers-color-scheme: dark)" srcset="https://socialify.git.ci/Thu-sunrise/ecommerce-microservices/image?description=1&descriptionEditable=%E2%9A%A1%EF%B8%8F%2013%20Microservices%20%E2%80%A2%20Spring%20Boot%203%20%E2%80%A2%20Kubernetes&font=Inter&forks=1&language=1&owner=1&pattern=Floating%20Cogs&pulls=1&stargazers=1&theme=Dark"/>
+    <img alt="ecommerce-microservices" src="https://socialify.git.ci/Thu-sunrise/ecommerce-microservices/image?description=1&descriptionEditable=%E2%9A%A1%EF%B8%8F%2013%20Microservices%20%E2%80%A2%20Spring%20Boot%203%20%E2%80%A2%20Kubernetes&font=Inter&forks=1&language=1&owner=1&pattern=Floating%20Cogs&pulls=1&stargazers=1&theme=Auto"/>
   </picture>
 </p>
 
