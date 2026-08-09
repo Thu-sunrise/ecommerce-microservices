@@ -90,8 +90,11 @@ This forked version introduces a robust **Monorepo structure**, advanced **Infra
 
 - [Docker Desktop](https://www.docker.com/get-started) (macOS / Windows) or Docker Engine (Linux)
 - 8 GB+ RAM allocated to Docker
+- **Terraform** & **AWS CLI** (Only required for Production Deployment)
 
-### One-Command Setup (k3d)
+### 1. Local Development Setup (k3d)
+
+The fastest way to test the platform locally using `k3d`.
 
 ```bash
 git clone https://github.com/hoangtien2k3/ecommerce-microservices.git
@@ -100,7 +103,6 @@ bash scripts/start-ecommerce.sh
 ```
 
 The script automatically:
-
 1. Installs k3d and kubectl (if missing)
 2. Creates a local Kubernetes cluster
 3. Deploys NGINX Ingress Controller
@@ -109,9 +111,26 @@ The script automatically:
 6. Updates `/etc/hosts`
 
 Wait ~5 minutes for all pods to become ready:
-
 ```bash
 kubectl get pods -n ecommerce -w
+```
+
+### 2. Production Deployment Setup (Terraform + K3s)
+
+This project supports automated cloud infrastructure provisioning via **Terraform** (AWS EC2 instances) and a robust **K3s** cluster deployment for a production-like environment.
+
+**Step 1: Provision Cloud Infrastructure (AWS)**
+```bash
+cd infrastructure/terraform
+terraform init
+terraform apply
+```
+
+**Step 2: Deploy K3s Cluster & Services**
+Once Terraform successfully provisions the EC2 instances, use the deployment script to setup the K3s cluster and deploy all microservices:
+```bash
+cd ../../
+bash scripts/deploy-k3s-cluster.sh
 ```
 
 ### URLs
