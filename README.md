@@ -1,8 +1,8 @@
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: light)" srcset="https://socialify.git.ci/hoangtien2k3/ecommerce-microservices/image?description=1&descriptionEditable=%E2%9A%A1%EF%B8%8F%2013%20Microservices%20%E2%80%A2%20Spring%20Boot%203%20%E2%80%A2%20Kubernetes&font=Inter&forks=1&language=1&logo=https%3A%2F%2Fi.ibb.co%2FN366vtQ%2Fhoangtien2k3.png&owner=1&pattern=Floating%20Cogs&pulls=1&stargazers=1&theme=Light"/>
-    <source media="(prefers-color-scheme: dark)" srcset="https://socialify.git.ci/hoangtien2k3/ecommerce-microservices/image?description=1&descriptionEditable=%E2%9A%A1%EF%B8%8F%2013%20Microservices%20%E2%80%A2%20Spring%20Boot%203%20%E2%80%A2%20Kubernetes&font=Inter&forks=1&language=1&logo=https%3A%2F%2Fi.ibb.co%2FN366vtQ%2Fhoangtien2k3.png&owner=1&pattern=Floating%20Cogs&pulls=1&stargazers=1&theme=Dark"/>
-    <img alt="ecommerce-microservices" src="https://socialify.git.ci/hoangtien2k3/ecommerce-microservices/image?description=1&descriptionEditable=%E2%9A%A1%EF%B8%8F%2013%20Microservices%20%E2%80%A2%20Spring%20Boot%203%20%E2%80%A2%20Kubernetes&font=Inter&forks=1&language=1&logo=https%3A%2F%2Fi.ibb.co%2FN366vtQ%2Fhoangtien2k3.png&owner=1&pattern=Floating%20Cogs&pulls=1&stargazers=1&theme=Auto"/>
+    <source media="(prefers-color-scheme: light)" srcset="https://socialify.git.ci/Thu-sunrise/ecommerce-microservices/image?description=1&descriptionEditable=%E2%9A%A1%EF%B8%8F%2013%20Microservices%20%E2%80%A2%20Spring%20Boot%203%20%E2%80%A2%20Kubernetes&font=Inter&forks=1&language=1&logo=https%3A%2F%2Fi.ibb.co%2FN366vtQ%2Fhoangtien2k3.png&owner=1&pattern=Floating%20Cogs&pulls=1&stargazers=1&theme=Light"/>
+    <source media="(prefers-color-scheme: dark)" srcset="https://socialify.git.ci/Thu-sunrise/ecommerce-microservices/image?description=1&descriptionEditable=%E2%9A%A1%EF%B8%8F%2013%20Microservices%20%E2%80%A2%20Spring%20Boot%203%20%E2%80%A2%20Kubernetes&font=Inter&forks=1&language=1&logo=https%3A%2F%2Fi.ibb.co%2FN366vtQ%2Fhoangtien2k3.png&owner=1&pattern=Floating%20Cogs&pulls=1&stargazers=1&theme=Dark"/>
+    <img alt="ecommerce-microservices" src="https://socialify.git.ci/Thu-sunrise/ecommerce-microservices/image?description=1&descriptionEditable=%E2%9A%A1%EF%B8%8F%2013%20Microservices%20%E2%80%A2%20Spring%20Boot%203%20%E2%80%A2%20Kubernetes&font=Inter&forks=1&language=1&logo=https%3A%2F%2Fi.ibb.co%2FN366vtQ%2Fhoangtien2k3.png&owner=1&pattern=Floating%20Cogs&pulls=1&stargazers=1&theme=Auto"/>
   </picture>
 </p>
 
@@ -16,11 +16,11 @@
   <a href="LICENSE">
     <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License">
   </a>
-  <a href="https://github.com/hoangtien2k3/ecommerce-microservices/releases">
-    <img src="https://img.shields.io/github/v/release/hoangtien2k3/ecommerce-microservices" alt="Release">
+  <a href="https://github.com/Thu-sunrise/ecommerce-microservices/releases">
+    <img src="https://img.shields.io/github/v/release/Thu-sunrise/ecommerce-microservices" alt="Release">
   </a>
-  <a href="https://github.com/hoangtien2k3/ecommerce-microservices/stargazers">
-    <img src="https://img.shields.io/github/stars/hoangtien2k3/ecommerce-microservices?style=social" alt="Stars">
+  <a href="https://github.com/Thu-sunrise/ecommerce-microservices/stargazers">
+    <img src="https://img.shields.io/github/stars/Thu-sunrise/ecommerce-microservices?style=social" alt="Stars">
   </a>
 </p>
 
@@ -97,7 +97,7 @@ This forked version introduces a robust **Monorepo structure**, advanced **Infra
 The fastest way to test the platform locally using `k3d`.
 
 ```bash
-git clone https://github.com/hoangtien2k3/ecommerce-microservices.git
+git clone https://github.com/Thu-sunrise/ecommerce-microservices.git
 cd ecommerce-microservices
 bash scripts/start-ecommerce.sh
 ```
@@ -202,11 +202,11 @@ Every service exposes:
 
 ## 📈 Stats
 
-<a href="https://star-history.com/#hoangtien2k3/ecommerce-microservices&Date">
+<a href="https://star-history.com/#Thu-sunrise/ecommerce-microservices&Date">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=hoangtien2k3/ecommerce-microservices&type=Date&theme=dark" />
-    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=hoangtien2k3/ecommerce-microservices&type=Date" />
-    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=hoangtien2k3/ecommerce-microservices&type=Date" />
+    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=Thu-sunrise/ecommerce-microservices&type=Date&theme=dark" />
+    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=Thu-sunrise/ecommerce-microservices&type=Date" />
+    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=Thu-sunrise/ecommerce-microservices&type=Date" />
   </picture>
 </a>
 
