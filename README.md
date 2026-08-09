@@ -95,7 +95,7 @@ frontend, and a full suite of infrastructure — all deployable on **Kubernetes 
 ```bash
 git clone https://github.com/hoangtien2k3/ecommerce-microservices.git
 cd ecommerce-microservices
-bash start-ecommerce.sh
+bash scripts/start-ecommerce.sh
 ```
 
 The script automatically:
@@ -128,49 +128,31 @@ kubectl get pods -n ecommerce -w
 
 ```
 ecommerce-microservices/
-├── auth-service/                   # Port 8088
-├── common-lib/                     # Shared library
-│   ├── common-core/                #   Contracts, exceptions, i18n
-│   ├── common-spring/              #   Auto-configurations
-│   ├── common-security/            #   JWT / OAuth2 security
-│   ├── common-keycloak/            #   Keycloak admin client
-│   ├── common-kafka/               #   Kafka / CDC helpers
-│   ├── common-logging/             #   AOP performance logging
-│   └── common-storage/             #   S3 object storage abstraction
-├── deploy/
-│   └── apisix/                     # APISIX standalone config
-├── docker/
-│   ├── keycloak/import/            # Keycloak realm configuration
-│   └── postgres/init/              # Database creation scripts
+├── apps/                           # Microservices & Frontend
+│   ├── auth-service/               #   Port 8088
+│   ├── frontend/                   #   Next.js 16 application
+│   ├── order-service/              #   Port 8084
+│   ├── product-service/            #   Port 8086
+│   └── ... (13 services total)
+├── infrastructure/                 # Deployment & Infrastructure configs
+│   ├── k8s/                        #   Kubernetes manifests (ArgoCD, gateway, ingress)
+│   ├── terraform/                  #   Terraform modules
+│   └── docker/                     #   Docker configs (Postgres, Keycloak, etc.)
+├── packages/                       # Shared libraries (Monorepo)
+│   └── common-lib/                 #   Core, security, logging, kafka, storage modules
+├── scripts/                        # Automation & deployment scripts
+│   ├── start-ecommerce.sh          #   Entry point for local cluster
+│   ├── k3d-setup.sh                #   One-shot K8s deployment script
+│   └── deploy-k3s-cluster.sh       #   Production K3s deployment script
+├── tests/                          # Automated testing scenarios
+│   ├── ha-proxy/                   #   HA Proxy & Load balancing tests
+│   ├── hpa/                        #   Horizontal Pod Autoscaling tests
+│   ├── istio-chaos/                #   Istio chaos engineering
+│   ├── istio-routing/              #   Istio traffic routing tests
+│   └── security/                   #   mTLS & security tests
 ├── docker-compose.yml              # Full-stack local orchestration
-├── favourite-service/              # Port 8081
-├── frontend/                       # Next.js 16 application
-├── inventory-service/              # Port 8082
-├── k3d-config.yaml                 # k3d cluster definition
-├── k3d-setup.sh                    # One-shot K8s deployment script
-├── k8s/                            # Kubernetes manifests
-│   ├── argocd/                     # ArgoCD GitOps configurations
-│   ├── backend/                    # 13 service deployments
-│   ├── frontend/                   # Frontend deployment
-│   ├── gateway/                    # APISIX Ingress CRDs
-│   ├── infra/                      # Infrastructure deployments
-│   ├── ingress/                    # NGINX Ingress rules
-│   ├── configmap.yaml
-│   ├── namespace.yaml
-│   └── secrets.yaml
 ├── Makefile                        # Build & deploy automation
-├── media-service/                  # Port 8083
-├── notification-service/           # Port 8090
-├── order-service/                  # Port 8084
-├── payment-service/                # Port 8085
-├── pom.xml                         # Parent POM
-├── product-service/                # Port 8086
-├── promotion-service/              # Port 8093
-├── rating-service/                 # Port 8089
-├── search-service/                 # Port 8094
-├── shipping-service/               # Port 8087
-├── start-ecommerce.sh              # Entry point
-└── tax-service/                    # Port 8091
+└── pom.xml                         # Parent POM
 ```
 
 ---
