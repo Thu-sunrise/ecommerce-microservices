@@ -178,6 +178,11 @@ Every service exposes:
   </picture>
 </a>
 
+## 👥 Contributors & Modifications
+
+- **Original Author:** [Hoàng Anh Tiến](https://github.com/hoangtien2k3)
+- **Modified by:** [Thu-sunrise](https://github.com/Thu-sunrise) - Refactored project structure, added infrastructure configurations (Terraform, Istio), chaos engineering, and extensive test scripts.
+
 ## Contributing
 
 If you would like to contribute to the development of this project, please follow our contribution guidelines.
@@ -192,5 +197,6 @@ If you would like to contribute to the development of this project, please follo
 
 ```
 MIT License
-Copyright (c) 2026 Hoàng Anh Tiến
+Copyright (c) 2026 Hoàng Anh Tiến (Original Author)
+Copyright (c) 2026 Thu-sunrise (Modifications)
 ```
