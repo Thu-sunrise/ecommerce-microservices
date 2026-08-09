@@ -1,0 +1,22 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: keycloak-vs
+  namespace: ecommerce
+spec:
+  hosts:
+    - "keycloak.hubsunrise.me"   
+    - keycloak             
+  gateways:
+    - ecommerce-gateway           
+  http:
+    - timeout: 30s           
+      retries:
+        attempts: 3
+        perTryTimeout: 10s
+        retryOn: 5xx,gateway-error,connect-failure
+      route:
+        - destination:
+            host: keycloak
+            port:
+              number: 8080

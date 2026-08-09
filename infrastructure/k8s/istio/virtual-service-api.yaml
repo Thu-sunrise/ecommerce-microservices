@@ -1,0 +1,16 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: api-vs
+  namespace: ecommerce
+spec:
+  hosts:
+    - "api.hubsunrise.me"   
+  gateways:
+    - ecommerce-gateway           
+  http:
+    - route:
+        - destination:
+            host: apisix-gateway
+            port:
+              number: 9080

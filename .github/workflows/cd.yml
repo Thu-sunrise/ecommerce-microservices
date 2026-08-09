@@ -79,21 +79,21 @@ jobs:
 
       - name: Deploy namespace & config
         run: |
-          kubectl apply -f k8s/namespace.yaml
-          kubectl apply -f k8s/secrets.yaml
-          kubectl apply -f k8s/configmap.yaml
+          kubectl apply -f infrastructure/k8s/namespace.yaml
+          kubectl apply -f infrastructure/k8s/secrets.yaml
+          kubectl apply -f infrastructure/k8s/configmap.yaml
 
       - name: Deploy infra
-        run: kubectl apply -f k8s/infra/
+        run: kubectl apply -f infrastructure/k8s/infra/
 
       - name: Deploy backend services
-        run: kubectl apply -f k8s/backend/
+        run: kubectl apply -f infrastructure/k8s/backend/
 
       - name: Deploy frontend
-        run: kubectl apply -f k8s/frontend/
+        run: kubectl apply -f infrastructure/k8s/frontend/
 
       - name: Apply ingress
-        run: kubectl apply -f k8s/ingress/ || true
+        run: kubectl apply -f infrastructure/k8s/ingress/ || true
 
       - name: Rollout restart all services
         run: |

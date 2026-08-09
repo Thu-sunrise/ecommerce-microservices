@@ -20,20 +20,20 @@
         (${revision}) inherited by all modules.
     </description>
     <modules>
-        <module>common-lib</module>
-        <module>auth-service</module>
-        <module>product-service</module>
-        <module>order-service</module>
-        <module>payment-service</module>
-        <module>inventory-service</module>
-        <module>shipping-service</module>
-        <module>notification-service</module>
-        <module>rating-service</module>
-        <module>search-service</module>
-        <module>promotion-service</module>
-        <module>tax-service</module>
-        <module>favourite-service</module>
-        <module>media-service</module>
+        <module>packages/common-lib</module>
+        <module>apps/auth-service</module>
+        <module>apps/product-service</module>
+        <module>apps/order-service</module>
+        <module>apps/payment-service</module>
+        <module>apps/inventory-service</module>
+        <module>apps/shipping-service</module>
+        <module>apps/notification-service</module>
+        <module>apps/rating-service</module>
+        <module>apps/search-service</module>
+        <module>apps/promotion-service</module>
+        <module>apps/tax-service</module>
+        <module>apps/favourite-service</module>
+        <module>apps/media-service</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

@@ -70,7 +70,7 @@ jobs:
         run: |
           SUCCESS=false
           for i in 1 2 3; do
-            mvn -pl ${{ inputs.service }} -am \
+            mvn -pl apps/${{ inputs.service }} -am \
               package jib:build \
               -DskipTests -B \
               -Djib.to.image=${{ steps.meta.outputs.image }} \
@@ -87,7 +87,7 @@ jobs:
       - name: Build image tar only (PR — no push)
         if: github.event_name == 'pull_request'
         run: |
-          mvn -pl ${{ inputs.service }} -am \
+          mvn -pl apps/${{ inputs.service }} -am \
             package jib:buildTar \
             -DskipTests -B \
             -Djib.to.image=${{ steps.meta.outputs.image }}:pr-check \

@@ -71,3 +71,27 @@ files
 ### Flatten-maven-plugin ###
 **/.flattened-pom.xml
 .flattened-pom.xml
+
+### Secrets and configuration ###
+.env
+infrastructure/k8s/secrets.yaml
+k8s/secrets.yaml
+infrastructure/terraform/ecommerce-ssh-key
+infrastructure/terraform/ecommerce-ssh-key.pub
+terraform/ecommerce-ssh-key
+terraform/ecommerce-ssh-key.pub
+infrastructure/terraform/*.tfstate
+infrastructure/terraform/*.tfstate.*
+terraform/*.tfstate
+terraform/*.tfstate.*
+kube/
+tls-cert/
+
+# Infrastructure ignores
+infrastructure/terraform/.terraform/
+infrastructure/terraform/*.tfstate
+infrastructure/terraform/*.tfstate.*
+infrastructure/istio-*/
+apps/frontend/node_modules/
+node_modules/
+

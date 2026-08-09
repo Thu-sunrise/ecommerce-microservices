@@ -1,0 +1,95 @@
+{
+  "realm": "ecommerce",
+  "enabled": true,
+  "displayName": "Ecommerce Realm",
+  "registrationAllowed": false,
+  "loginWithEmailAllowed": true,
+  "duplicateEmailsAllowed": false,
+  "resetPasswordAllowed": true,
+  "roles": {
+    "realm": [
+      {
+        "name": "ADMIN",
+        "description": "Administrator role"
+      },
+      {
+        "name": "USER",
+        "description": "Default user role"
+      },
+      {
+        "name": "MANAGER",
+        "description": "Manager role"
+      }
+    ]
+  },
+  "clients": [
+    {
+      "clientId": "ecommerce-client",
+      "name": "Ecommerce Public Client",
+      "enabled": true,
+      "protocol": "openid-connect",
+      "publicClient": true,
+      "directAccessGrantsEnabled": true,
+      "standardFlowEnabled": true,
+      "serviceAccountsEnabled": false,
+      "implicitFlowEnabled": false,
+      "fullScopeAllowed": true,
+      "redirectUris": [
+        "http://localhost:*",
+        "http://127.0.0.1:*",
+        "http://api.ecommerce.local/*",
+        "http://api.hubsunrise.me/*",
+        "http://api.hubsunrise.me/*",
+        "http://frontend.hubsunrise.me/*",
+        "http://frontend.hubsunrise.me/*",
+        "http://admin.hubsunrise.me/*",
+        "http://admin.hubsunrise.me/*"
+      ],
+      "webOrigins": [
+        "*"
+      ],
+      "attributes": {
+        "post.logout.redirect.uris": "http://localhost:*##http://127.0.0.1:*##http://ecommerce.local/*##http://admin.ecommerce.local/*"
+      }
+    }
+  ],
+  "users": [
+    {
+      "username": "testuser",
+      "enabled": true,
+      "emailVerified": true,
+      "firstName": "Test",
+      "lastName": "User",
+      "email": "testuser@local.dev",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "testpass",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "USER"
+      ]
+    },
+    {
+      "username": "adminuser",
+      "enabled": true,
+      "emailVerified": true,
+      "firstName": "Admin",
+      "lastName": "User",
+      "email": "adminuser@local.dev",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "adminpass",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "ADMIN",
+        "MANAGER"
+      ]
+    }
+  ]
+}

@@ -13,7 +13,7 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      - ./docker/postgres/init:/docker-entrypoint-initdb.d:ro
+      - ./infrastructure/docker/postgres/init:/docker-entrypoint-initdb.d:ro
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres -d ecommerce"]
       interval: 5s
@@ -122,7 +122,7 @@ services:
       KC_DB_USERNAME: ${POSTGRES_USER}
       KC_DB_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
-      - ./docker/keycloak/import:/opt/keycloak/data/import:ro
+      - ./infrastructure/docker/keycloak/import:/opt/keycloak/data/import:ro
     ports:
       - "8080:8080"
     depends_on:
@@ -149,8 +149,8 @@ services:
     environment:
       KEYCLOAK_CLIENT_SECRET: ${KEYCLOAK_CLIENT_SECRET:-changeme-ecommerce-client-secret}
     volumes:
-      - ./deploy/apisix/config.yaml:/usr/local/apisix/conf/config.yaml:ro
-      - ./deploy/apisix/apisix.yaml:/usr/local/apisix/conf/apisix.yaml:ro
+      - ./infrastructure/deploy/apisix/config.yaml:/usr/local/apisix/conf/config.yaml:ro
+      - ./infrastructure/deploy/apisix/apisix.yaml:/usr/local/apisix/conf/apisix.yaml:ro
     depends_on:
       keycloak:
         condition: service_healthy

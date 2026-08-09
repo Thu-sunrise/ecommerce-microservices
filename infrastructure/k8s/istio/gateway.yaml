@@ -1,0 +1,29 @@
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: ecommerce-gateway
+  namespace: ecommerce
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+    - port:
+        number: 80
+        name: http
+        protocol: HTTP
+      hosts:
+        - "*.hubsunrise.me"
+        - "*.hubsunrise.me"
+      # tls:
+      #   httpsRefirect: true # tự động điều hướng http sang https
+    
+    - port:
+        number: 443
+        name: https
+        protocol: HTTPS 
+      hosts:
+        - "*.hubsunrise.me"
+        - "*.hubsunrise.me"
+      tls:
+        mode: SIMPLE
+        credentialName: ecommerce-credential

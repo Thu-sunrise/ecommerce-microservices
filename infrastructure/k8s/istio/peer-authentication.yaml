@@ -1,0 +1,8 @@
+apiVersion: security.istio.io/v1beta1
+kind: PeerAuthentication
+metadata:
+  name: default-mtls
+  namespace: ecommerce
+spec:
+  mtls:
+    mode: STRICT    # bắt buộc mTLS giữa tất cả services

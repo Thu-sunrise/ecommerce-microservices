@@ -1,0 +1,84 @@
+#=========================================================
+# CẤU HÌNH HỆ THỐNG HAProxy (Tầng OS)
+#=========================================================
+global
+    log /dev/log    local0         # Lưu log chung vào Syslog
+    log /dev/log    local1 notice  # Lưu thông báo quan trọng
+    chroot /var/lib/haproxy        # Cô lập thư mục (Bảo mật)
+    stats socket /run/haproxy/admin.sock mode 660 level admin expose-fd listeners # Cổng gõ lệnh Admin
+    stats timeout 30s
+    user haproxy                   # Chạy quyền user thường
+    group haproxy
+    daemon                         # Chạy ngầm (background)
+
+#=========================================================
+# CẤU HÌNH MẶC ĐỊNH (Áp dụng cho mọi khối bên dưới)
+#=========================================================
+defaults
+    log     global
+    mode    http                   # Xử lý theo chuẩn HTTP (Layer 7)
+    option  httplog                # Định dạng log chi tiết của Web
+    option  dontlognull            # Bỏ qua log rác (Ping/Health Check)
+    timeout connect 5000           # Giới hạn 5s kết nối đến K8s
+    timeout client  50000          # Giới hạn 50s khách hàng treo
+    timeout server  50000          # Giới hạn 50s chờ K8s xử lý xong
+
+#=========================================================
+# GIAO DIỆN QUẢN TRỊ ĐỒ HỌA (DASHBOARD)
+#=========================================================
+frontend stats
+    bind *:8404                    # Mở cổng 8404
+    stats enable                   # Bật giao diện
+    stats uri /stats               # Đường dẫn: http://IP:8404/stats
+    stats refresh 10s              # Tự động refresh sau 10s
+    stats admin if LOCALHOST       # Chỉ cấp quyền Admin nếu truy cập từ máy nội bộ
+
+#=========================================================
+# CỬA ĐÓN KHÁCH MUA HÀNG (WEB TRAFFIC)
+#=========================================================
+frontend k8s_http_frontend
+    bind *:80                      # Đón khách ở cổng web mặc định (80)
+    mode http
+    option forwardfor              # BẮT BUỘC: Nhét IP thật của khách vào Header (X-Forwarded-For) cho K8s đọc
+    default_backend k8s_http_backend
+
+frontend k8s_https_frontend
+    bind *:443
+    mode tcp
+    default_backend k8s_https_backend
+
+#=========================================================
+# ĐỊNH TUYẾN & KHÁM SỨC KHỎE K8S
+#=========================================================
+backend k8s_http_backend
+    mode http
+    balance roundrobin             # Thuật toán chia đều xoay vòng (Khách 1->Node1, Khách 2->Node2...)
+    
+    # check inter 2000: Ping khám sức khỏe 2 giây/lần
+    # rise 2: Nếu sống dậy 2 lần liên tiếp -> Báo UP
+    # fall 3: Nếu chết 3 lần liên tiếp (6s) -> Báo DOWN, ngừng chia luồng vào Node đó
+
+    # Các Node của Cụm K8s số 1
+    server c1-master-ip ${c1_master_ip}:30081 check inter 2000 rise 2 fall 3
+    server c1-worker-1-ip ${c1_worker1_ip}:30081 check inter 2000 rise 2 fall 3
+    server c1-worker-2-ip ${c1_worker2_ip}:30081 check inter 2000 rise 2 fall 3
+
+    # Các Node của Cụm K8s số 2
+    server c2-master-ip ${c2_master_ip}:30081 check inter 2000 rise 2 fall 3
+    server c2-worker-1-ip ${c2_worker1_ip}:30081 check inter 2000 rise 2 fall 3
+    server c2-worker-2-ip ${c2_worker2_ip}:30081 check inter 2000 rise 2 fall 3
+
+
+backend k8s_https_backend
+    mode tcp
+    balance roundrobin
+
+    # Các Node của Cụm K8s số 1
+    server c1-master-ip ${c1_master_ip}:30082 check inter 2000 rise 2 fall 3
+    server c1-worker-1-ip ${c1_worker1_ip}:30082 check inter 2000 rise 2 fall 3
+    server c1-worker-2-ip ${c1_worker2_ip}:30082 check inter 2000 rise 2 fall 3
+
+    # Các Node của Cụm K8s số 2
+    server c2-master-ip ${c2_master_ip}:30082 check inter 2000 rise 2 fall 3
+    server c2-worker-1-ip ${c2_worker1_ip}:30082 check inter 2000 rise 2 fall 3
+    server c2-worker-2-ip ${c2_worker2_ip}:30082 check inter 2000 rise 2 fall 3

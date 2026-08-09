@@ -43,62 +43,62 @@ jobs:
           filters: |
             backend:
               - 'pom.xml'
-              - 'common-lib/**'
-              - '*-service/**'
+              - 'packages/common-lib/**'
+              - 'apps/*-service/**'
             auth-service:
-              - 'auth-service/**'
-              - 'common-lib/**'
+              - 'apps/auth-service/**'
+              - 'packages/common-lib/**'
               - 'pom.xml'
             product-service:
-              - 'product-service/**'
-              - 'common-lib/**'
+              - 'apps/product-service/**'
+              - 'packages/common-lib/**'
               - 'pom.xml'
             order-service:
-              - 'order-service/**'
-              - 'common-lib/**'
+              - 'apps/order-service/**'
+              - 'packages/common-lib/**'
               - 'pom.xml'
             payment-service:
-              - 'payment-service/**'
-              - 'common-lib/**'
+              - 'apps/payment-service/**'
+              - 'packages/common-lib/**'
               - 'pom.xml'
             shipping-service:
-              - 'shipping-service/**'
-              - 'common-lib/**'
+              - 'apps/shipping-service/**'
+              - 'packages/common-lib/**'
               - 'pom.xml'
             inventory-service:
-              - 'inventory-service/**'
-              - 'common-lib/**'
+              - 'apps/inventory-service/**'
+              - 'packages/common-lib/**'
               - 'pom.xml'
             favourite-service:
-              - 'favourite-service/**'
-              - 'common-lib/**'
+              - 'apps/favourite-service/**'
+              - 'packages/common-lib/**'
               - 'pom.xml'
             rating-service:
-              - 'rating-service/**'
-              - 'common-lib/**'
+              - 'apps/rating-service/**'
+              - 'packages/common-lib/**'
               - 'pom.xml'
             notification-service:
-              - 'notification-service/**'
-              - 'common-lib/**'
+              - 'apps/notification-service/**'
+              - 'packages/common-lib/**'
               - 'pom.xml'
             media-service:
-              - 'media-service/**'
-              - 'common-lib/**'
+              - 'apps/media-service/**'
+              - 'packages/common-lib/**'
               - 'pom.xml'
             search-service:
-              - 'search-service/**'
-              - 'common-lib/**'
+              - 'apps/search-service/**'
+              - 'packages/common-lib/**'
               - 'pom.xml'
             promotion-service:
-              - 'promotion-service/**'
-              - 'common-lib/**'
+              - 'apps/promotion-service/**'
+              - 'packages/common-lib/**'
               - 'pom.xml'
             tax-service:
-              - 'tax-service/**'
-              - 'common-lib/**'
+              - 'apps/tax-service/**'
+              - 'packages/common-lib/**'
               - 'pom.xml'
             frontend:
-              - 'frontend/**'
+              - 'apps/frontend/**'
 
   # Run tests — only when backend code changed
   test:
@@ -299,8 +299,8 @@ jobs:
         with:
           # Build context is the monorepo root (frontend/) so turbo prune can
           # resolve workspace packages. Dockerfile lives in the web app folder.
-          context: frontend
-          file: frontend/apps/web/Dockerfile
+          context: apps/frontend
+          file: apps/frontend/apps/web/Dockerfile
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           cache-from: type=gha,scope=frontend-web
@@ -329,8 +329,8 @@ jobs:
             type=ref,event=branch
       - uses: docker/build-push-action@v6
         with:
-          context: frontend
-          file: frontend/apps/admin/Dockerfile
+          context: apps/frontend
+          file: apps/frontend/apps/admin/Dockerfile
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           cache-from: type=gha,scope=frontend-admin

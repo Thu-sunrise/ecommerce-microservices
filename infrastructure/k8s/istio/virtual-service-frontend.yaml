@@ -1,0 +1,22 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: frontend-vs
+  namespace: ecommerce
+spec:
+  hosts:
+    - "frontend.hubsunrise.me"   
+    - frontend             
+  gateways:
+    - ecommerce-gateway           
+  http:
+    - timeout: 30s           
+      retries:
+        attempts: 3          # retry tối đa 3 lần
+        perTryTimeout: 10s   # mỗi lần retry chờ 10s
+        retryOn: 5xx,gateway-error,connect-failure
+      route:
+        - destination:
+            host: frontend
+            port:
+              number: 3000

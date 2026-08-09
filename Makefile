@@ -55,7 +55,7 @@ restart:
 
 ## Tạo kind cluster + deploy toàn bộ (one-shot)
 kind-setup:
-	./kind-setup.sh
+	./scripts/kind-setup.sh
 
 ## Xóa kind cluster
 kind-delete:
@@ -93,10 +93,10 @@ kind-restart:
 k8s-build:
 	@for svc in $(SERVICES); do \
 		echo "==> Building $$svc"; \
-		docker build -t $(REGISTRY)/$$svc:$(TAG) ./$$svc; \
+		docker build -t $(REGISTRY)/$$svc:$(TAG) ./apps/$$svc; \
 	done
 	@echo "==> Building frontend"
-	docker build -t $(REGISTRY)/frontend:$(TAG) ./frontend
+	docker build -t $(REGISTRY)/frontend:$(TAG) ./apps/frontend
 
 ## Push all images to registry
 k8s-push:
@@ -108,49 +108,49 @@ k8s-push:
 
 ## Apply namespace + secrets + configmap
 k8s-config:
-	kubectl apply -f k8s/namespace.yaml
-	kubectl apply -f k8s/secrets.yaml
-	kubectl apply -f k8s/configmap.yaml
+	kubectl apply -f infrastructure/k8s/namespace.yaml
+	kubectl apply -f infrastructure/k8s/secrets.yaml
+	kubectl apply -f infrastructure/k8s/configmap.yaml
 
 ## Deploy infrastructure (databases, kafka, etc.)
 k8s-infra: k8s-config
-	kubectl apply -f k8s/infra/postgres.yaml
-	kubectl apply -f k8s/infra/mongodb.yaml
-	kubectl apply -f k8s/infra/redis.yaml
-	kubectl apply -f k8s/infra/kafka.yaml
-	kubectl apply -f k8s/infra/elasticsearch.yaml
-	kubectl apply -f k8s/infra/minio.yaml
-	kubectl apply -f k8s/infra/keycloak.yaml
+	kubectl apply -f infrastructure/k8s/infra/postgres.yaml
+	kubectl apply -f infrastructure/k8s/infra/mongodb.yaml
+	kubectl apply -f infrastructure/k8s/infra/redis.yaml
+	kubectl apply -f infrastructure/k8s/infra/kafka.yaml
+	kubectl apply -f infrastructure/k8s/infra/elasticsearch.yaml
+	kubectl apply -f infrastructure/k8s/infra/minio.yaml
+	kubectl apply -f infrastructure/k8s/infra/keycloak.yaml
 	@echo "Waiting 60s for infra to stabilise…"
 	sleep 60
 
 ## Deploy backend microservices
 k8s-backend:
-	kubectl apply -f k8s/backend/discovery-service.yaml
+	kubectl apply -f infrastructure/k8s/backend/discovery-service.yaml
 	@echo "Waiting for discovery-service to be Ready…"
 	kubectl wait pod -n $(NAMESPACE) -l app=discovery-service --for=condition=Ready --timeout=240s
-	kubectl apply -f k8s/backend/api-gateway.yaml
-	kubectl apply -f k8s/backend/auth-service.yaml
-	kubectl apply -f k8s/backend/product-service.yaml
-	kubectl apply -f k8s/backend/order-service.yaml
-	kubectl apply -f k8s/backend/payment-service.yaml
-	kubectl apply -f k8s/backend/shipping-service.yaml
-	kubectl apply -f k8s/backend/inventory-service.yaml
-	kubectl apply -f k8s/backend/favourite-service.yaml
-	kubectl apply -f k8s/backend/rating-service.yaml
-	kubectl apply -f k8s/backend/media-service.yaml
-	kubectl apply -f k8s/backend/tax-service.yaml
-	kubectl apply -f k8s/backend/promotion-service.yaml
-	kubectl apply -f k8s/backend/search-service.yaml
-	kubectl apply -f k8s/backend/notification-service.yaml
+	kubectl apply -f infrastructure/k8s/backend/api-gateway.yaml
+	kubectl apply -f infrastructure/k8s/backend/auth-service.yaml
+	kubectl apply -f infrastructure/k8s/backend/product-service.yaml
+	kubectl apply -f infrastructure/k8s/backend/order-service.yaml
+	kubectl apply -f infrastructure/k8s/backend/payment-service.yaml
+	kubectl apply -f infrastructure/k8s/backend/shipping-service.yaml
+	kubectl apply -f infrastructure/k8s/backend/inventory-service.yaml
+	kubectl apply -f infrastructure/k8s/backend/favourite-service.yaml
+	kubectl apply -f infrastructure/k8s/backend/rating-service.yaml
+	kubectl apply -f infrastructure/k8s/backend/media-service.yaml
+	kubectl apply -f infrastructure/k8s/backend/tax-service.yaml
+	kubectl apply -f infrastructure/k8s/backend/promotion-service.yaml
+	kubectl apply -f infrastructure/k8s/backend/search-service.yaml
+	kubectl apply -f infrastructure/k8s/backend/notification-service.yaml
 
 ## Deploy frontend
 k8s-frontend:
-	kubectl apply -f k8s/frontend/frontend.yaml
+	kubectl apply -f infrastructure/k8s/frontend/frontend.yaml
 
 ## Deploy ingress
 k8s-ingress:
-	kubectl apply -f k8s/ingress/ingress.yaml
+	kubectl apply -f infrastructure/k8s/ingress/ingress.yaml
 
 ## Full K8S deploy: infra → backend → frontend → ingress
 k8s-all: k8s-infra k8s-backend k8s-frontend k8s-ingress
@@ -162,12 +162,12 @@ k8s-all: k8s-infra k8s-backend k8s-frontend k8s-ingress
 
 ## Delete all K8S resources (keeps PVCs to preserve data)
 k8s-delete:
-	kubectl delete -f k8s/ingress/ --ignore-not-found
-	kubectl delete -f k8s/frontend/ --ignore-not-found
-	kubectl delete -f k8s/backend/ --ignore-not-found
-	kubectl delete -f k8s/infra/ --ignore-not-found
-	kubectl delete -f k8s/configmap.yaml --ignore-not-found
-	kubectl delete -f k8s/secrets.yaml --ignore-not-found
+	kubectl delete -f infrastructure/k8s/ingress/ --ignore-not-found
+	kubectl delete -f infrastructure/k8s/frontend/ --ignore-not-found
+	kubectl delete -f infrastructure/k8s/backend/ --ignore-not-found
+	kubectl delete -f infrastructure/k8s/infra/ --ignore-not-found
+	kubectl delete -f infrastructure/k8s/configmap.yaml --ignore-not-found
+	kubectl delete -f infrastructure/k8s/secrets.yaml --ignore-not-found
 
 ## Delete namespace and EVERYTHING (destructive!)
 k8s-nuke:
@@ -209,7 +209,7 @@ argocd-ui:
 
 ## Apply ArgoCD Application manifests
 argocd-apply:
-	kubectl apply -f k8s/argocd/application.yaml
+	kubectl apply -f infrastructure/k8s/argocd/application.yaml
 
 ## Generate ArgoCD API token (requires argocd CLI + port-forward active)
 argocd-token:
